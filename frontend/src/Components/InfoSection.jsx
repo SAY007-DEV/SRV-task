@@ -6,6 +6,26 @@ import Modal from './Modal'
 function InfoSection() {
   const userInfo = useSelector((state) => state.user)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isEducationEditing, setIsEducationEditing] = useState(false)
+  const [educationData, setEducationData] = useState({
+    mba: {
+      degree: "Master of Business Administration (MBA)",
+      institution: "XYZ University, Thiruvananthapuram, Kerala",
+      years: "2018 – 2020"
+    },
+    hsc: {
+      degree: "Higher Secondary Certificate (HSC)",
+      institution: "St. Mary's Higher Secondary School, Ernakulam, Kerala",
+      years: "2012 – 2014"
+    },
+    ssc: {
+      degree: "Secondary School Certificate (SSC)",
+      institution: "Govt. Model School, Alappuzha, Kerala",
+      years: "2010 – 2012"
+    }
+  })
+
+  console.log('Current userInfo:', userInfo); // For debugging
 
   const handleUpdateClick = () => {
     setIsModalOpen(true)
@@ -13,6 +33,39 @@ function InfoSection() {
 
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  const handleEducationUpdate = async () => {
+    try {
+      // Replace with your actual API endpoint
+      const response = await fetch('http://localhost:5000/api/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(educationData)
+      });
+
+      if (response.ok) {
+        setIsEducationEditing(false);
+        // You might want to show a success message here
+      } else {
+        throw new Error('Failed to update education');
+      }
+    } catch (error) {
+      console.error('Error updating education:', error);
+      // You might want to show an error message here
+    }
+  }
+
+  const handleEducationChange = (level, field, value) => {
+    setEducationData(prev => ({
+      ...prev,
+      [level]: {
+        ...prev[level],
+        [field]: value
+      }
+    }))
   }
 
   return (
@@ -36,15 +89,15 @@ function InfoSection() {
                 <div className="flex justify-between">
                   <div>
                     <p className="font-semibold">Full Name</p>
-                    <p>{userInfo?.fullName || 'Abhishek Shankar'}</p>
+                    <p>{userInfo.fullName}</p>
                   </div>
                   <div>
                     <p className="font-semibold">Date of Birth</p>
-                    <p>{userInfo?.dateOfBirth || '21/03/2000'}</p>
+                    <p>{userInfo.dateOfBirth}</p>
                   </div>
                   <div>
                     <p className="font-semibold">Gender</p>
-                    <p>{userInfo?.gender || 'Male'}</p>
+                    <p>{userInfo.gender}</p>
                   </div>
                 </div>
               </div>
@@ -53,8 +106,8 @@ function InfoSection() {
                   <div>
                     <p className="font-semibold">Mobile</p>
                     <p className="flex items-center">
-                      {userInfo?.mobile || '+91 9876543210'}
-                      {userInfo?.mobileVerified && (
+                      {userInfo.mobile || '+91 9876543210'}
+                      {userInfo.mobileVerified && (
                         <i className="fas fa-check-circle text-green-500 ml-2"></i>
                       )}
                     </p>
@@ -62,8 +115,8 @@ function InfoSection() {
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="flex items-center">
-                      {userInfo?.email || 'abhishekshankar123@gmail.com'}
-                      {userInfo?.emailVerified && (
+                      {userInfo.email || 'abhishekshankar123@gmail.com'}
+                      {userInfo.emailVerified && (
                         <i className="fas fa-check-circle text-green-500 ml-2"></i>
                       )}
                     </p>
@@ -73,8 +126,8 @@ function InfoSection() {
               <div className="mb-4">
                 <p className="font-semibold">Aadhar</p>
                 <p className="flex items-center">
-                  {userInfo?.aadhar || 'Not specified'}
-                  {!userInfo?.aadharVerified && (
+                  {userInfo.aadhar || 'Not specified'}
+                  {!userInfo.aadharVerified && (
                     <button className="bg-red-500 text-white px-2 py-1 rounded-lg ml-2">
                       Verify
                     </button>
@@ -83,7 +136,7 @@ function InfoSection() {
               </div>
               <div>
                 <p className="font-semibold">Address</p>
-                <p>{userInfo?.address || 'Not specified'}</p>
+                <p>{userInfo.address || 'Not specified'}</p>
               </div>
             </div>
           </div>
@@ -156,7 +209,7 @@ function InfoSection() {
               </p>
             </div>
           </div>
-          <button className="bg-red-500 text-white px-6 py-2 rounded-lg">
+          <button className="bg-red-500 text-white px-6 py-2 rounded-lg" >
             Pay Now
           </button>
         </div>
@@ -165,23 +218,60 @@ function InfoSection() {
       <div className="bg-white shadow rounded-lg p-4 mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Education</h2>
-          <button className="text-blue-500">Update Education</button>
+          {isEducationEditing ? (
+            <div className="space-x-2">
+              <button 
+                className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                onClick={handleEducationUpdate}
+              >
+                Save
+              </button>
+              <button 
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                onClick={() => setIsEducationEditing(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button 
+              className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+              onClick={() => setIsEducationEditing(true)}
+            >
+              Update Education
+            </button>
+          )}
         </div>
-        <div className="mb-4">
-          <p className="text-gray-700"><strong>Master of Business Administration (MBA)</strong> <button className="text-blue-500">Edit</button></p>
-          <p className="text-gray-500">XYZ University, Thiruvananthapuram, Kerala</p>
-          <p className="text-gray-500">2018 – 2020</p>
-        </div>
-        <div className="mb-4">
-          <p className="text-gray-700"><strong>Higher Secondary Certificate (HSC)</strong> <button className="text-blue-500">Edit</button></p>
-          <p className="text-gray-500">St. Mary's Higher Secondary School, Ernakulam, Kerala</p>
-          <p className="text-gray-500">2012 – 2014</p>
-        </div>
-        <div>
-          <p className="text-gray-700"><strong>Secondary School Certificate (SSC)</strong> <button className="text-blue-500">Edit</button></p>
-          <p className="text-gray-500">Govt. Model School, Alappuzha, Kerala</p>
-          <p className="text-gray-500">2010 – 2012</p>
-        </div>
+
+        {Object.entries(educationData).map(([level, data]) => (
+          <div key={level} className="mb-4">
+            {isEducationEditing ? (
+              <div className="space-y-2">
+                <input
+                  className="w-full p-2 border rounded"
+                  value={data.degree}
+                  onChange={(e) => handleEducationChange(level, 'degree', e.target.value)}
+                />
+                <input
+                  className="w-full p-2 border rounded"
+                  value={data.institution}
+                  onChange={(e) => handleEducationChange(level, 'institution', e.target.value)}
+                />
+                <input
+                  className="w-full p-2 border rounded"
+                  value={data.years}
+                  onChange={(e) => handleEducationChange(level, 'years', e.target.value)}
+                />
+              </div>
+            ) : (
+              <>
+                <p className="text-gray-700"><strong>{data.degree}</strong></p>
+                <p className="text-gray-500">{data.institution}</p>
+                <p className="text-gray-500">{data.years}</p>
+              </>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="bg-white shadow rounded-lg p-4 mb-8">
@@ -245,7 +335,7 @@ function InfoSection() {
       </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <BasicForm closeModal={closeModal} initialData={userInfo} />
+        <BasicForm closeModal={closeModal} />
       </Modal>
     </div>
   )

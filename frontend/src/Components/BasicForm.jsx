@@ -1,44 +1,66 @@
 import React, { useState } from 'react'
- 
- function BasicForm({ closeModal }) {
-   const [formData, setFormData] = useState({
-     firstName: "",
-     lastName: "",
-     dob: "",
-     mobile: "+91",
-     email: "",
-     aadhar: "",
-     address: "",
-     state: "",
-     district: "",
-     pincode: "",
-     guardianName: "",
-     guardianNumber: "",
-     gender: ""
-   });
- 
-   const handleChange = (e) => {
-     const { name, value } = e.target;
-     setFormData({ ...formData, [name]: value });
-   };
- 
-   const handleGenderChange = (gender) => {
-     setFormData({ ...formData, gender });
-   };
- 
-   const handleSubmit = (e) => {
-     e.preventDefault();
-     // Handle form submission logic here
-     console.log(formData);
-   };
- 
-   const handleCancel = () => {
-     closeModal(); // Call the function to close the modal
-   };
+import { useDispatch } from 'react-redux'
+
+function BasicForm({ closeModal }) {
+  const dispatch = useDispatch()
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    mobile: "+91",
+    email: "",
+    aadhar: "",
+    address: "",
+    state: "",
+    district: "",
+    pincode: "",
+    guardianName: "",
+    guardianNumber: "",
+    gender: ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleGenderChange = (gender) => {
+    setFormData({ ...formData, gender });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Format the data for display
+    const displayData = {
+      fullName: `${formData.firstName} ${formData.lastName}`,
+      dateOfBirth: formData.dob,
+      gender: formData.gender,
+      mobile: formData.mobile,
+      email: formData.email,
+      aadhar: formData.aadhar,
+      address: `${formData.address}, ${formData.district}, ${formData.state}, ${formData.pincode}`,
+      mobileVerified: true,
+      emailVerified: true,
+      aadharVerified: false
+    };
+
+    // Dispatch the action with the formatted data
+    dispatch({
+      type: 'UPDATE_USER_INFO',
+      payload: displayData
+    });
+
+    console.log('Updated data:', displayData); // For debugging
+    closeModal();
+  };
+
+  const handleCancel = () => {
+    closeModal();
+  };
 
   return (
-    
-   <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
+    <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-3xl">
         <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Basic Information</h2>
             <button className="text-gray-500 hover:text-gray-700" onClick={handleCancel}>

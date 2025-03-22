@@ -17,6 +17,9 @@ const userSlice = createSlice({
     guardianName: '',
     guardianNumber: '',
     gender: '',
+    mobileVerified: false,
+    emailVerified: false,
+    aadharVerified: false
   },
   reducers: {
     updateUserInfo: (state, action) => {

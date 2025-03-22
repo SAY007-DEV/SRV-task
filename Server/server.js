@@ -1,27 +1,27 @@
-import express from "express";
+import express from 'express';
+import { connectDB } from './Config/database.js';
 import cors from 'cors';
-import connectDB from './Config/database.js';
-
+// Import your route files
+import userRoutes from './routes/userRoutes.js';  // adjust path as needed
 
 const app = express();
+// dotenv.config();
+
+// Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  // for parsing JSON bodies
+app.use(express.urlencoded({ extended: true }));  // for parsing URL-encoded bodies
+
+// Routes
+app.use('/api/users', userRoutes);  // adjust path as needed
+
+// Basic route for testing
+app.get('/', (req, res) => {
+    res.send('API is running...');
+});
 
 
-const PORT = 8080;
-
-connectDB();
-
-
-
-// api
-
-app.use('api/v1/user',);
-
-
-
-
-
+// storing
 
 let dataStore = []; // In-memory data storage
 
@@ -57,6 +57,10 @@ app.delete('/api/data/:id', (req, res) => {
 });
 
 
+// Connect to database
+connectDB();
+
+const PORT = 5000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
