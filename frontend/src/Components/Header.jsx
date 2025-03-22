@@ -13,7 +13,7 @@ function Header() {
 <header className="bg-white shadow">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                     <div className="flex items-center">
-                        <img src="" alt="ASAP Logo" className="h-10" />
+                        <img src="asap.png" alt="ASAP Logo" className="h-10" />
                         <nav className="hidden md:flex ml-6">
                             <a href="#" className="text-gray-700 hover:text-blue-500 mx-2">Jobs</a>
                             <a href="#" className="text-gray-700 hover:text-blue-500 mx-2">Internship</a>

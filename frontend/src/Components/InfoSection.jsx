@@ -4,7 +4,7 @@ import BasicForm from './BasicForm'
 import Modal from './Modal'
 
 function InfoSection() {
-  const userInfo = useSelector((state) => state)
+  const userInfo = useSelector((state) => state.user)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleUpdateClick = () => {
@@ -19,30 +19,147 @@ function InfoSection() {
     <div className="flex-1 mt-6 mr-4">
       <div className="bg-white shadow rounded-lg p-4 mb-8">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Basic Information</h2>
-          <button className="text-blue-500" onClick={handleUpdateClick}>Update</button>
+          <h2 className="text-xl font-semibold">
+            Basic Information
+          </h2>
+          <button 
+            className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+            onClick={handleUpdateClick}
+          >
+            Update
+          </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col space-y-2">
-            <p className="text-gray-700"><strong>Full Name:</strong> {userInfo.firstName} {userInfo.lastName}</p>
-            <p className="text-gray-700"><strong>Date of Birth:</strong> {userInfo.dob}</p>
-            <p className="text-gray-700"><strong>Gender:</strong> {userInfo.gender}</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="md:col-span-2">
+            <div className="bg-gray-50 p-4 rounded-lg border">
+              <div className="mb-4">
+                <div className="flex justify-between">
+                  <div>
+                    <p className="font-semibold">Full Name</p>
+                    <p>{userInfo?.fullName || 'Abhishek Shankar'}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Date of Birth</p>
+                    <p>{userInfo?.dateOfBirth || '21/03/2000'}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Gender</p>
+                    <p>{userInfo?.gender || 'Male'}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <div className="flex justify-between">
+                  <div>
+                    <p className="font-semibold">Mobile</p>
+                    <p className="flex items-center">
+                      {userInfo?.mobile || '+91 9876543210'}
+                      {userInfo?.mobileVerified && (
+                        <i className="fas fa-check-circle text-green-500 ml-2"></i>
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Email</p>
+                    <p className="flex items-center">
+                      {userInfo?.email || 'abhishekshankar123@gmail.com'}
+                      {userInfo?.emailVerified && (
+                        <i className="fas fa-check-circle text-green-500 ml-2"></i>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-4">
+                <p className="font-semibold">Aadhar</p>
+                <p className="flex items-center">
+                  {userInfo?.aadhar || 'Not specified'}
+                  {!userInfo?.aadharVerified && (
+                    <button className="bg-red-500 text-white px-2 py-1 rounded-lg ml-2">
+                      Verify
+                    </button>
+                  )}
+                </p>
+              </div>
+              <div>
+                <p className="font-semibold">Address</p>
+                <p>{userInfo?.address || 'Not specified'}</p>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col space-y-2">
-            <p className="text-gray-700"><strong>Mobile:</strong> {userInfo.mobile} <i className="fas fa-check-circle text-green-500"></i></p>
-            <p className="text-gray-700"><strong>Email:</strong> {userInfo.email} <i className="fas fa-check-circle text-green-500"></i></p>
-            <p className="text-gray-700"><strong>Aadhar:</strong> {userInfo.aadhar} <button className="text-red-500">Verify</button></p>
-          </div>
-        </div>
-        <p className="text-gray-700 mt-4"><strong>Address:</strong> {userInfo.address}</p>
-      </div>
 
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Payment Pending</h2>
-          <button className="bg-red-500 text-white py-2 px-4 rounded-lg">Pay Now</button>
+          {/* dummy info */}
+          <div>
+            <div className="bg-white p-4 rounded-lg border">
+              <ul className="space-y-2">
+                <li className="flex items-center">
+                  {/* <input checked="" className="mr-2" name="section" type="radio"/> */}
+                  <span className="font-semibold">
+                    Basic Information
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Education
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Career Objective
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Key Skills
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Resume/Portfolio
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Preferences
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Work Experience
+                  </span>
+                </li>
+                <li className="flex items-center">
+                  <input className="mr-2" name="section" type="radio"/>
+                  <span>
+                    Additional Documents
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <p className="text-gray-700">Registration fee 500 rupees pending. Pay now and get access to all services.</p>
+        <div className="mt-6 bg-green-50 p-4 rounded-lg flex items-center justify-between">
+          <div className="flex items-center">
+            <img alt="Payment Pending Icon" className="mr-4" src="https://placehold.co/50x50"/>
+            <div>
+              <p className="font-semibold">
+                Payment Pending
+              </p>
+              <p>
+                Registration fee 500 rupees pending. Pay now and get access to all services.
+              </p>
+            </div>
+          </div>
+          <button className="bg-red-500 text-white px-6 py-2 rounded-lg">
+            Pay Now
+          </button>
+        </div>
       </div>
 
       <div className="bg-white shadow rounded-lg p-4 mb-8">

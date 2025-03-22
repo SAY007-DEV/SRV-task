@@ -1,34 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux';
-import { updateUserInfo } from './Redux/action';
-
-function BasicForm({ closeModal, initialData }) {
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState(initialData);
-
-  useEffect(() => {
-    setFormData(initialData); // Set form data when modal opens
-  }, [initialData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleGenderChange = (gender) => {
-    setFormData({ ...formData, gender });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Dispatch the updated form data to the Redux store
-    dispatch(updateUserInfo(formData));
-    closeModal(); // Close the modal after submission
-  };
-
-  const handleCancel = () => {
-    closeModal(); // Call the function to close the modal
-  };
+import React, { useState } from 'react'
+ 
+ function BasicForm({ closeModal }) {
+   const [formData, setFormData] = useState({
+     firstName: "",
+     lastName: "",
+     dob: "",
+     mobile: "+91",
+     email: "",
+     aadhar: "",
+     address: "",
+     state: "",
+     district: "",
+     pincode: "",
+     guardianName: "",
+     guardianNumber: "",
+     gender: ""
+   });
+ 
+   const handleChange = (e) => {
+     const { name, value } = e.target;
+     setFormData({ ...formData, [name]: value });
+   };
+ 
+   const handleGenderChange = (gender) => {
+     setFormData({ ...formData, gender });
+   };
+ 
+   const handleSubmit = (e) => {
+     e.preventDefault();
+     // Handle form submission logic here
+     console.log(formData);
+   };
+ 
+   const handleCancel = () => {
+     closeModal(); // Call the function to close the modal
+   };
 
   return (
     
@@ -43,15 +49,15 @@ function BasicForm({ closeModal, initialData }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">First Name<span className="text-red-500">*</span></label>
-                    <input type="text" name="firstName" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.firstName} onChange={handleChange}/>
+                    <input type="text" name="firstName" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.firstName} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Last Name<span className="text-red-500">*</span></label>
-                    <input type="text" name="lastName" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.lastName} onChange={handleChange}/>
+                    <input type="text" name="lastName" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.lastName} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Date of Birth<span className="text-red-500">*</span></label>
-                    <input type="text" name="dob" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder='DD/MM/YYYY' value={formData.dob} onChange={handleChange}/>
+                    <input type="text" name="dob" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder='DD/MM/YYYY' value={formData.dob} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Gender<span className="text-red-500">*</span></label>
@@ -82,7 +88,7 @@ function BasicForm({ closeModal, initialData }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Mobile<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="mobile" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.mobile} onChange={handleChange}/>
+                        <input type="text" name="mobile" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.mobile} onChange={handleChange} required />
                         {formData.mobile.length === 13 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
@@ -94,14 +100,14 @@ function BasicForm({ closeModal, initialData }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Email<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="email" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.email} onChange={handleChange}/>
+                        <input type="email" name="email" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.email} onChange={handleChange} required />
                        
                     </div>
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Aadhar<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="aadhar" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.aadhar} onChange={handleChange}/>
+                        <input type="text" name="aadhar" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.aadhar} onChange={handleChange} required />
                         {formData.aadhar.length === 12 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
@@ -112,11 +118,11 @@ function BasicForm({ closeModal, initialData }) {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Address<span className="text-red-500">*</span></label>
-                    <input type="text" name="address" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.address} onChange={handleChange}/>
+                    <input type="text" name="address" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.address} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">State<span className="text-red-500">*</span></label>
-                    <select name="state" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                    <select name="state" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.state} onChange={handleChange} required>
                         <option value="Kerala">Kerala</option>
                         <option value="karnadaka">Karnataka</option>
                         <option value="Tamilnadu">Tamilnadu</option>
@@ -125,12 +131,12 @@ function BasicForm({ closeModal, initialData }) {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">District<span className="text-red-500">*</span></label>
-                    <input type="text" name="district" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.district} onChange={handleChange}/>
+                    <input type="text" name="district" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.district} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Pincode<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="pincode" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.pincode} onChange={handleChange}/>
+                        <input type="text" name="pincode" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.pincode} onChange={handleChange} required />
                         {formData.pincode.length === 6 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}

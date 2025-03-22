@@ -8,9 +8,9 @@ function Footer() {
                 <div className="container mx-auto px-4 py-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div>
-                            <img src="" alt="ASAP Logo" className="h-12 mb-4" />
+                            <img src="asap.png" alt="ASAP Logo" className="h-12 mb-4" />
                             <p className="text-gray-500">© 2024 ASAP Kerala. All Rights Reserved</p>
-                            <p className="text-gray-500">Powered by SRV InfoTech</p>
+                        
                         </div>
                         <div>
                             <h3 className="text-gray-700 font-semibold mb-4">Quick Links</h3>
@@ -33,7 +33,7 @@ function Footer() {
                         </div>
                     </div>
                     <div className="mt-8 text-center">
-                        <p className="text-gray-500">Stay Connected with Us</p>
+                        
                     </div>
                 </div>
             </footer>
