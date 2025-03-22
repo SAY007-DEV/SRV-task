@@ -1,21 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { updateUserInfo } from './Redux/action';
 
-function BasicForm({ closeModal }) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    dob: "",
-    mobile: "+91",
-    email: "",
-    aadhar: "",
-    address: "",
-    state: "",
-    district: "",
-    pincode: "",
-    guardianName: "",
-    guardianNumber: "",
-    gender: ""
-  });
+function BasicForm({ closeModal, initialData }) {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState(initialData);
+
+  useEffect(() => {
+    setFormData(initialData); // Set form data when modal opens
+  }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,8 +21,9 @@ function BasicForm({ closeModal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    // Dispatch the updated form data to the Redux store
+    dispatch(updateUserInfo(formData));
+    closeModal(); // Close the modal after submission
   };
 
   const handleCancel = () => {
