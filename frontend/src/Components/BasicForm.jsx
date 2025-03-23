@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import axios from 'axios'
 
 function BasicForm({ closeModal }) {
   const dispatch = useDispatch()
@@ -28,7 +29,7 @@ function BasicForm({ closeModal }) {
     setFormData({ ...formData, gender });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Format the data for display
@@ -42,17 +43,35 @@ function BasicForm({ closeModal }) {
       address: `${formData.address}, ${formData.district}, ${formData.state}, ${formData.pincode}`,
       mobileVerified: true,
       emailVerified: true,
-      aadharVerified: false
+      aadharVerified: false,
+      // Add additional fields that might be needed in InfoSection
+      guardianName: formData.guardianName,
+      guardianNumber: formData.guardianNumber,
+      state: formData.state,
+      district: formData.district,
+      pincode: formData.pincode
     };
 
-    // Dispatch the action with the formatted data
-    dispatch({
-      type: 'UPDATE_USER_INFO',
-      payload: displayData
-    });
-
-    console.log('Updated data:', displayData); // For debugging
-    closeModal();
+    try {
+      // Send data to your backend API
+      const response = await axios.post('http://localhost:5000/api/users/data', displayData);
+      
+      if (response.status === 200) {
+        // If successful, update Redux store with the response data
+        dispatch({
+          type: 'UPDATE_USER_INFO',
+          payload: response.data.data // Assuming the API returns the saved user data
+        });
+        
+        console.log('Data saved successfully:', response.data);
+        // Show success message to user
+        alert('Information updated successfully!');
+        closeModal();
+      }
+    } catch (error) {
+      console.error('Error saving data:', error);
+      alert('Failed to save data. Please try again.');
+    }
   };
 
   const handleCancel = () => {

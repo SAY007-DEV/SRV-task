@@ -4,7 +4,7 @@ import BasicForm from './BasicForm'
 import Modal from './Modal'
 
 function InfoSection() {
-  const userInfo = useSelector((state) => state.user)
+  const userInfo = useSelector((state) => state.user.userInfo)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEducationEditing, setIsEducationEditing] = useState(false)
   const [educationData, setEducationData] = useState({
@@ -73,7 +73,7 @@ function InfoSection() {
       <div className="bg-white shadow rounded-lg p-4 mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">
-            Basic Information
+            Personal Information
           </h2>
           <button 
             className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
@@ -82,136 +82,66 @@ function InfoSection() {
             Update
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <div className="bg-gray-50 p-4 rounded-lg border">
-              <div className="mb-4">
-                <div className="flex justify-between">
-                  <div>
-                    <p className="font-semibold">Full Name</p>
-                    <p>{userInfo.fullName}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold">Date of Birth</p>
-                    <p>{userInfo.dateOfBirth}</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold">Gender</p>
-                    <p>{userInfo.gender}</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-4">
-                <div className="flex justify-between">
-                  <div>
-                    <p className="font-semibold">Mobile</p>
-                    <p className="flex items-center">
-                      {userInfo.mobile || '+91 9876543210'}
-                      {userInfo.mobileVerified && (
-                        <i className="fas fa-check-circle text-green-500 ml-2"></i>
-                      )}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="font-semibold">Email</p>
-                    <p className="flex items-center">
-                      {userInfo.email || 'abhishekshankar123@gmail.com'}
-                      {userInfo.emailVerified && (
-                        <i className="fas fa-check-circle text-green-500 ml-2"></i>
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-4">
-                <p className="font-semibold">Aadhar</p>
-                <p className="flex items-center">
-                  {userInfo.aadhar || 'Not specified'}
-                  {!userInfo.aadharVerified && (
-                    <button className="bg-red-500 text-white px-2 py-1 rounded-lg ml-2">
-                      Verify
-                    </button>
-                  )}
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold">Address</p>
-                <p>{userInfo.address || 'Not specified'}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* dummy info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <div className="bg-white p-4 rounded-lg border">
-              <ul className="space-y-2">
-                <li className="flex items-center">
-                  {/* <input checked="" className="mr-2" name="section" type="radio"/> */}
-                  <span className="font-semibold">
-                    Basic Information
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Education
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Career Objective
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Key Skills
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Resume/Portfolio
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Preferences
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Work Experience
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <input className="mr-2" name="section" type="radio"/>
-                  <span>
-                    Additional Documents
-                  </span>
-                </li>
-              </ul>
-            </div>
+            <p className="text-gray-600">Full Name</p>
+            <p className="font-medium">{userInfo.fullName}</p>
           </div>
-        </div>
-        <div className="mt-6 bg-green-50 p-4 rounded-lg flex items-center justify-between">
-          <div className="flex items-center">
-            <img alt="Payment Pending Icon" className="mr-4" src="https://placehold.co/50x50"/>
+          <div>
+            <p className="text-gray-600">Date of Birth</p>
+            <p className="font-medium">{userInfo.dateOfBirth}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Gender</p>
+            <p className="font-medium">{userInfo.gender}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Mobile</p>
+            <p className="font-medium">{userInfo.mobile}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Email</p>
+            <p className="font-medium">{userInfo.email}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Aadhar</p>
+            <p className="font-medium">{userInfo.aadhar}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Address</p>
+            <p className="font-medium">{userInfo.address}</p>
+          </div>
+          {userInfo.guardianName && (
             <div>
-              <p className="font-semibold">
-                Payment Pending
-              </p>
-              <p>
-                Registration fee 500 rupees pending. Pay now and get access to all services.
-              </p>
+              <p className="text-gray-600">Guardian Name</p>
+              <p className="font-medium">{userInfo.guardianName}</p>
+            </div>
+          )}
+          {userInfo.guardianNumber && (
+            <div>
+              <p className="text-gray-600">Guardian Number</p>
+              <p className="font-medium">{userInfo.guardianNumber}</p>
+            </div>
+          )}
+        </div>
+        
+        {/* Verification Status */}
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold mb-2">Verification Status</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-center">
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Mobile {userInfo.mobileVerified ? 'Verified' : 'Pending'}</span>
+            </div>
+            <div className="flex items-center">
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.emailVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Email {userInfo.emailVerified ? 'Verified' : 'Pending'}</span>
+            </div>
+            <div className="flex items-center">
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.aadharVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Aadhar {userInfo.aadharVerified ? 'Verified' : 'Pending'}</span>
             </div>
           </div>
-          <button className="bg-red-500 text-white px-6 py-2 rounded-lg" >
-            Pay Now
-          </button>
         </div>
       </div>
 

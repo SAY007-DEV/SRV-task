@@ -1,19 +1,63 @@
 import mongoose from "mongoose";
 
-const userschema = new mongoose.Schema({
-    firstName: { type: String },
-    lastName: { type: String },
-    dob: { type: Date },
-    mobile: { type: Number },
-    email: { type: String },
-    aadhar: { type: Number },
-    address: { type: String },
-    state: { type: String },
-    district: { type: String },
-    pincode: { type: Number },
-    guardianName: { type: String },
-    guardianNumber: { type: Number },
-    gender: { type: String },
+const educationSchema = new mongoose.Schema({
+    degree: String,
+    institution: String,
+    years: String
 });
 
-module.exports = mongoose.model('Users',userschema);
+const userSchema = new mongoose.Schema({
+    fullName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    mobile: {
+        type: String,
+        required: true
+    },
+    dateOfBirth: {
+        type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        required: true,
+        enum: ['Male', 'Female', 'Non-Binary']
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    education: [educationSchema],
+    aadhar: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    mobileVerified: {
+        type: Boolean,
+        default: false
+    },
+    emailVerified: {
+        type: Boolean,
+        default: false
+    },
+    aadharVerified: {
+        type: Boolean,
+        default: false
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    timestamps: true
+});
+
+const User = mongoose.model('User', userSchema);
+export default User;

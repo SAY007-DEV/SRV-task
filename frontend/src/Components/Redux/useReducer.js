@@ -4,26 +4,33 @@ import { createSlice } from '@reduxjs/toolkit';
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    firstName: '',
-    lastName: '',
-    dob: '',
-    mobile: '',
-    email: '',
-    aadhar: '',
-    address: '',
-    state: '',
-    district: '',
-    pincode: '',
-    guardianName: '',
-    guardianNumber: '',
-    gender: '',
-    mobileVerified: false,
-    emailVerified: false,
-    aadharVerified: false
+    userInfo: {
+      fullName: '',
+      dateOfBirth: '',
+      gender: '',
+      mobile: '',
+      email: '',
+      aadhar: '',
+      address: '',
+      mobileVerified: false,
+      emailVerified: false,
+      aadharVerified: false,
+      guardianName: '',
+      guardianNumber: '',
+      state: '',
+      district: '',
+      pincode: ''
+    }
   },
   reducers: {
     updateUserInfo: (state, action) => {
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          ...action.payload
+        }
+      };
     },
   },
 });
