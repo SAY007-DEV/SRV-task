@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import useUserStore from './store/userStore' // Update path as needed
+import useUserStore from './Store/userStore.js' // Update path as needed
 import BasicForm from './BasicForm'
 import Modal from './Modal'
 
 function InfoSection() {
   const userInfo = useUserStore(state => state.userInfo)
+  const updateUserInfo = useUserStore(state => state.updateUserInfo)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEducationEditing, setIsEducationEditing] = useState(false)
   const [educationData, setEducationData] = useState({
@@ -23,6 +24,24 @@ function InfoSection() {
       institution: "Govt. Model School, Alappuzha, Kerala",
       years: "2010 – 2012"
     }
+  })
+
+  const [isCareerEditing, setIsCareerEditing] = useState(false)
+  const [isSkillsEditing, setIsSkillsEditing] = useState(false)
+  const [isPortfolioEditing, setIsPortfolioEditing] = useState(false)
+  
+  const [careerObjective, setCareerObjective] = useState(userInfo.careerObjective || {
+    title: "For Entry-Level Position",
+    description: "Enthusiastic and highly motivated graduate..."
+  })
+  
+  const [skills, setSkills] = useState(userInfo.skills || [])
+  const [newSkill, setNewSkill] = useState("")
+  
+  const [portfolio, setPortfolio] = useState(userInfo.portfolio || {
+    github: "",
+    behance: "",
+    website: ""
   })
 
   console.log('Current userInfo:', userInfo); // For debugging
@@ -68,21 +87,52 @@ function InfoSection() {
     }))
   }
 
+  // Career Objective handlers
+  const handleCareerSave = () => {
+    updateUserInfo({ careerObjective })
+    setIsCareerEditing(false)
+  }
+
+  // Skills handlers
+  const handleAddSkill = (e) => {
+    e.preventDefault()
+    if (newSkill.trim()) {
+      setSkills([...skills, newSkill.trim()])
+      setNewSkill("")
+    }
+  }
+
+  const handleRemoveSkill = (skillToRemove) => {
+    setSkills(skills.filter(skill => skill !== skillToRemove))
+  }
+
+  const handleSkillsSave = () => {
+    updateUserInfo({ skills })
+    setIsSkillsEditing(false)
+  }
+
+  // Portfolio handlers
+  const handlePortfolioSave = () => {
+    updateUserInfo({ portfolio })
+    setIsPortfolioEditing(false)
+  }
+
   return (
-    <div className="flex-1 mt-6 mr-4">
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">
+    <div className="flex-1 p-4 lg:mt-6 lg:mr-4 max-w-full overflow-x-hidden">
+      {/* Personal Information Card */}
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">
             Personal Information
           </h2>
           <button 
-            className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+            className="w-full sm:w-auto bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
             onClick={handleUpdateClick}
           >
             Update
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
             <p className="text-gray-600">Full Name</p>
             <p className="font-medium">{userInfo?.fullName || 'Not provided'}</p>
@@ -127,8 +177,8 @@ function InfoSection() {
         
         {/* Verification Status */}
         <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-2">Verification Status</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <h3 className="text-lg font-semibold mb-4">Verification Status</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="flex items-center">
               <span className={`w-3 h-3 rounded-full mr-2 ${userInfo?.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
               <span>Mobile {userInfo?.mobileVerified ? 'Verified' : 'Pending'}</span>
@@ -145,19 +195,20 @@ function InfoSection() {
         </div>
       </div>
 
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Education</h2>
+      {/* Education Card */}
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Education</h2>
           {isEducationEditing ? (
-            <div className="space-x-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button 
-                className="bg-green-500 text-white px-4 py-2 rounded-lg"
+                className="w-full sm:w-auto bg-green-500 text-white px-4 py-2 rounded-lg"
                 onClick={handleEducationUpdate}
               >
                 Save
               </button>
               <button 
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                className="w-full sm:w-auto bg-gray-500 text-white px-4 py-2 rounded-lg"
                 onClick={() => setIsEducationEditing(false)}
               >
                 Cancel
@@ -165,7 +216,7 @@ function InfoSection() {
             </div>
           ) : (
             <button 
-              className="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
+              className="w-full sm:w-auto bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
               onClick={() => setIsEducationEditing(true)}
             >
               Update Education
@@ -173,95 +224,211 @@ function InfoSection() {
           )}
         </div>
 
-        {Object.entries(educationData).map(([level, data]) => (
-          <div key={level} className="mb-4">
-            {isEducationEditing ? (
-              <div className="space-y-2">
-                <input
-                  className="w-full p-2 border rounded"
-                  value={data.degree}
-                  onChange={(e) => handleEducationChange(level, 'degree', e.target.value)}
-                />
-                <input
-                  className="w-full p-2 border rounded"
-                  value={data.institution}
-                  onChange={(e) => handleEducationChange(level, 'institution', e.target.value)}
-                />
-                <input
-                  className="w-full p-2 border rounded"
-                  value={data.years}
-                  onChange={(e) => handleEducationChange(level, 'years', e.target.value)}
-                />
-              </div>
-            ) : (
-              <>
-                <p className="text-gray-700"><strong>{data.degree}</strong></p>
-                <p className="text-gray-500">{data.institution}</p>
-                <p className="text-gray-500">{data.years}</p>
-              </>
-            )}
+        <div className="space-y-6">
+          {Object.entries(educationData).map(([level, data]) => (
+            <div key={level} className="border-b pb-4 last:border-b-0">
+              {isEducationEditing ? (
+                <div className="space-y-3">
+                  <input
+                    className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                    value={data.degree}
+                    onChange={(e) => handleEducationChange(level, 'degree', e.target.value)}
+                  />
+                  <input
+                    className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                    value={data.institution}
+                    onChange={(e) => handleEducationChange(level, 'institution', e.target.value)}
+                  />
+                  <input
+                    className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                    value={data.years}
+                    onChange={(e) => handleEducationChange(level, 'years', e.target.value)}
+                  />
+                </div>
+              ) : (
+                <div className="space-y-1">
+                  <p className="text-gray-700 font-semibold">{data.degree}</p>
+                  <p className="text-gray-600">{data.institution}</p>
+                  <p className="text-gray-500">{data.years}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Career Objective Card */}
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Career Objective</h2>
+          <button 
+            className="w-full sm:w-auto text-blue-500 px-4 py-2 rounded-lg"
+            onClick={() => setIsCareerEditing(!isCareerEditing)}
+          >
+            {isCareerEditing ? 'Cancel' : 'Update'}
+          </button>
+        </div>
+        {isCareerEditing ? (
+          <div className="space-y-4">
+            <input
+              type="text"
+              className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+              value={careerObjective.title}
+              onChange={(e) => setCareerObjective({...careerObjective, title: e.target.value})}
+              placeholder="Position Title"
+            />
+            <textarea
+              className="w-full p-3 border rounded h-32 focus:ring-2 focus:ring-blue-500"
+              value={careerObjective.description}
+              onChange={(e) => setCareerObjective({...careerObjective, description: e.target.value})}
+              placeholder="Career Objective Description"
+            />
+            <button 
+              className="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded"
+              onClick={handleCareerSave}
+            >
+              Save Changes
+            </button>
           </div>
-        ))}
-      </div>
-
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Career Objective</h2>
-          <button className="text-blue-500">Update</button>
-        </div>
-        <p className="text-gray-700">For Entry-Level Position</p>
-        <p className="text-gray-500">Enthusiastic and highly motivated graduate with a degree in Business Administration, eager to apply strong analytical and communication skills in a fast-paced corporate environment. Looking for an entry-level role in marketing where I can contribute to team success while gaining hands-on experience and advancing my career.</p>
-      </div>
-
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Key Skills</h2>
-          <button className="text-blue-500">Update Skills</button>
-        </div>
-        <div className="flex flex-wrap">
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">Communication</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">UI Designing</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">UI Development</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">Leadership</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">Human Resource</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">php</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">Accounting</span>
-          <span className="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-sm mr-2 mb-2">Data Science</span>
-        </div>
-      </div>
-
-      {/* <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Resume</h2>
-          <button className="text-blue-500">Update Resume</button>
-        </div>
-        <div className="flex items-center mb-4">
-          <img src="https://placehold.co/50x50" alt="Resume Icon" className="h-12 w-12 mr-4" />
-          <div>
-            <p className="text-gray-700">abhishek_resume.pdf</p>
-            <p className="text-gray-500">Uploaded on Sep 30, 2024</p>
+        ) : (
+          <div className="space-y-2">
+            <p className="text-gray-700 font-semibold">{careerObjective.title}</p>
+            <p className="text-gray-600">{careerObjective.description}</p>
           </div>
-        </div>
-        <button className="bg-blue-500 text-white py-2 px-4 rounded-lg">Add Video Resume</button>
-      </div> */}
+        )}
+      </div>
 
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Portfolio</h2>
-          <button className="text-blue-500">Update Portfolio</button>
+      {/* Skills Card */}
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Key Skills</h2>
+          <button 
+            className="w-full sm:w-auto text-blue-500 px-4 py-2 rounded-lg"
+            onClick={() => setIsSkillsEditing(!isSkillsEditing)}
+          >
+            {isSkillsEditing ? 'Cancel' : 'Update Skills'}
+          </button>
         </div>
-        <div className="mb-4">
-          <p className="text-gray-700"><strong>GitHub</strong></p>
-          <p className="text-gray-500">https://github.com/abhishekshankar</p>
+        {isSkillsEditing ? (
+          <div className="space-y-4">
+            <form onSubmit={handleAddSkill} className="flex flex-col sm:flex-row gap-2">
+              <input
+                type="text"
+                className="flex-1 p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+                placeholder="Add new skill"
+              />
+              <button 
+                type="submit"
+                className="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded"
+              >
+                Add
+              </button>
+            </form>
+            <div className="flex flex-wrap gap-2">
+              {skills.map((skill, index) => (
+                <span 
+                  key={index} 
+                  className="bg-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm flex items-center gap-2"
+                >
+                  {skill}
+                  <button 
+                    onClick={() => handleRemoveSkill(skill)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+            <button 
+              className="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded"
+              onClick={handleSkillsSave}
+            >
+              Save Changes
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill, index) => (
+              <span 
+                key={index} 
+                className="bg-gray-200 text-gray-700 py-2 px-4 rounded-full text-sm"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Portfolio Card */}
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+          <h2 className="text-xl font-semibold mb-2 sm:mb-0">Portfolio</h2>
+          <button 
+            className="w-full sm:w-auto text-blue-500 px-4 py-2 rounded-lg"
+            onClick={() => setIsPortfolioEditing(!isPortfolioEditing)}
+          >
+            {isPortfolioEditing ? 'Cancel' : 'Update Portfolio'}
+          </button>
         </div>
-        <div className="mb-4">
-          <p className="text-gray-700"><strong>Behance</strong></p>
-          <p className="text-gray-500">https://www.behance.net/abhishekshankar</p>
-        </div>
-        <div>
-          <p className="text-gray-700"><strong>Personal Website</strong></p>
-          <p className="text-gray-500">http://www.abhishekshankar.info</p>
-        </div>
+        {isPortfolioEditing ? (
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <label className="block text-gray-700 font-medium">GitHub</label>
+              <input
+                type="text"
+                className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                value={portfolio.github}
+                onChange={(e) => setPortfolio({...portfolio, github: e.target.value})}
+                placeholder="GitHub URL"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-gray-700 font-medium">Behance</label>
+              <input
+                type="text"
+                className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                value={portfolio.behance}
+                onChange={(e) => setPortfolio({...portfolio, behance: e.target.value})}
+                placeholder="Behance URL"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-gray-700 font-medium">Personal Website</label>
+              <input
+                type="text"
+                className="w-full p-3 border rounded focus:ring-2 focus:ring-blue-500"
+                value={portfolio.website}
+                onChange={(e) => setPortfolio({...portfolio, website: e.target.value})}
+                placeholder="Website URL"
+              />
+            </div>
+            <button 
+              className="w-full sm:w-auto bg-blue-500 text-white px-6 py-2 rounded"
+              onClick={handlePortfolioSave}
+            >
+              Save Changes
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <p className="text-gray-700 font-semibold">GitHub</p>
+              <p className="text-gray-600 break-all">{portfolio.github}</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-gray-700 font-semibold">Behance</p>
+              <p className="text-gray-600 break-all">{portfolio.behance}</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-gray-700 font-semibold">Personal Website</p>
+              <p className="text-gray-600 break-all">{portfolio.website}</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
