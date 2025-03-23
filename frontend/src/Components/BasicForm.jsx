@@ -53,7 +53,7 @@ function BasicForm({ closeModal }) {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/data', displayData);
+      const response = await axios.post('https://server-task-ex4s.onrender.com/api/users/data', displayData);
       
       if (response.status === 200) {
         // Update Zustand store instead of Redux

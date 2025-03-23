@@ -36,7 +36,7 @@ const useUserStore = create((set) => ({
   fetchUsers: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get('http://localhost:5000/api/data');
+      const response = await axios.get('https://server-task-ex4s.onrender.com/api/data');
       const userData = Array.isArray(response.data) ? response.data : [response.data];
       set({ users: userData, loading: false });
     } catch (error) {

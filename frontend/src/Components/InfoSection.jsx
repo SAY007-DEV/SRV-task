@@ -58,7 +58,7 @@ function InfoSection() {
   const handleEducationUpdate = async () => {
     try {
       // Replace with your actual API endpoint
-      const response = await fetch('http://localhost:5000/api/data', {
+      const response = await fetch('https://server-task-ex4s.onrender.com/api/data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
