@@ -118,12 +118,12 @@ function InfoSection() {
   }
 
   return (
-    <div className="flex-1 p-4 lg:mt-6 lg:mr-4 max-w-full overflow-x-hidden">
+    <div className="flex-1 p-4 lg:mt-6 lg:mr-4 max-w-7xl mx-auto w-full">
       {/* Personal Information Card */}
-      <div className="bg-white shadow rounded-lg p-4 mb-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
           <h2 className="text-xl font-semibold mb-2 sm:mb-0">
-            Personal Information
+            Basic Information
           </h2>
           <button 
             className="w-full sm:w-auto bg-blue-100 text-blue-600 px-4 py-2 rounded-lg"
@@ -132,7 +132,7 @@ function InfoSection() {
             Update
           </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <p className="text-gray-600">Full Name</p>
             <p className="font-medium">{userInfo?.fullName || 'Not provided'}</p>
@@ -176,9 +176,9 @@ function InfoSection() {
         </div>
         
         {/* Verification Status */}
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-4">Verification Status</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold mb-6">Verification Status</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="flex items-center">
               <span className={`w-3 h-3 rounded-full mr-2 ${userInfo?.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
               <span>Mobile {userInfo?.mobileVerified ? 'Verified' : 'Pending'}</span>
@@ -196,7 +196,7 @@ function InfoSection() {
       </div>
 
       {/* Education Card */}
-      <div className="bg-white shadow rounded-lg p-4 mb-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <h2 className="text-xl font-semibold mb-2 sm:mb-0">Education</h2>
           {isEducationEditing ? (
@@ -258,7 +258,7 @@ function InfoSection() {
       </div>
 
       {/* Career Objective Card */}
-      <div className="bg-white shadow rounded-lg p-4 mb-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <h2 className="text-xl font-semibold mb-2 sm:mb-0">Career Objective</h2>
           <button 
@@ -299,7 +299,7 @@ function InfoSection() {
       </div>
 
       {/* Skills Card */}
-      <div className="bg-white shadow rounded-lg p-4 mb-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <h2 className="text-xl font-semibold mb-2 sm:mb-0">Key Skills</h2>
           <button 
@@ -364,7 +364,7 @@ function InfoSection() {
       </div>
 
       {/* Portfolio Card */}
-      <div className="bg-white shadow rounded-lg p-4 mb-6">
+      <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
           <h2 className="text-xl font-semibold mb-2 sm:mb-0">Portfolio</h2>
           <button 
