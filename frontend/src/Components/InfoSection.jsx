@@ -436,7 +436,7 @@ function InfoSection() {
       </div>
 
       {/* Right sidebar */}
-      <div className="lg:w-1/4">
+      <div className="hidden lg:block lg:w-1/4">
         <Right />
       </div>
 

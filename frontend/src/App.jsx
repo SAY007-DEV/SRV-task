@@ -6,6 +6,7 @@ import BasicForm from './Components/BasicForm'
 import Footer from './Components/Footer'
 import Sidebar from './Components/Sidebar'
 import Profile from './Components/pages/profile'
+import ProfileModal from './Components/ProfileModal'
 
 // Layout component for main pages
 const MainLayout = ({ children }) => (
@@ -51,6 +52,7 @@ function App() {
           </MainLayout>
         } />
       </Routes>
+      <ProfileModal />
     </BrowserRouter>
   )
 }

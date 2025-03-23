@@ -25,9 +25,62 @@ function Profile() {
 
     console.log('Users:', users); // Debugging log
 
+    // Add this debug section to display raw state data
+    const renderDebugSection = () => (
+        <div className="mt-8 p-4 bg-gray-100 rounded-lg">
+            <h2 className="text-xl font-bold mb-4">Debug Information</h2>
+            <div className="space-y-4">
+                <div>
+                    <h3 className="font-semibold">Loading State:</h3>
+                    <pre className="bg-white p-2 rounded">
+                        {JSON.stringify({ loading }, null, 2)}
+                    </pre>
+                </div>
+                
+                <div>
+                    <h3 className="font-semibold">Error State:</h3>
+                    <pre className="bg-white p-2 rounded">
+                        {JSON.stringify({ error }, null, 2)}
+                    </pre>
+                </div>
+                
+                <div>
+                    <h3 className="font-semibold">Selected User:</h3>
+                    <pre className="bg-white p-2 rounded">
+                        {JSON.stringify(selectedUser, null, 2)}
+                    </pre>
+                </div>
+                
+                <div>
+                    <h3 className="font-semibold">All Users:</h3>
+                    <pre className="bg-white p-2 rounded overflow-auto max-h-96">
+                        {JSON.stringify(users, null, 2)}
+                    </pre>
+                </div>
+            </div>
+            
+            <button 
+                onClick={() => fetchUsers()}
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+                Refresh Data
+            </button>
+        </div>
+    );
+
     if (loading) return <div className="text-center p-4">Loading...</div>;
-    if (error) return <div className="text-center p-4 text-red-500">Error: {error}</div>;
-    if (!users || users.length === 0) return <div className="text-center p-4">No users found</div>;
+    if (error) return (
+        <div className="container mx-auto p-4">
+            <div className="text-center p-4 text-red-500">Error: {error}</div>
+            {renderDebugSection()}
+        </div>
+    );
+    if (!users || users.length === 0) return (
+        <div className="container mx-auto p-4">
+            <div className="text-center p-4">No users found</div>
+            {renderDebugSection()}
+        </div>
+    );
 
     return (
         <div className="container mx-auto p-4">
@@ -56,7 +109,7 @@ function Profile() {
                                 </div>
                             </div>
 
-                            {/* Basic Info */}
+                            {/* Personal Information */}
                             <div className="space-y-2 mb-4">
                                 <p className="flex items-center text-gray-600">
                                     <span className="mr-2">📱</span>
@@ -66,20 +119,48 @@ function Profile() {
                                     <span className="mr-2">📍</span>
                                     {user.address || 'No address'}
                                 </p>
+                                <p className="flex items-center text-gray-600">
+                                    <span className="mr-2">🎂</span>
+                                    {user.dob || user.dateOfBirth || 'No DOB'}
+                                </p>
+                                <p className="flex items-center text-gray-600">
+                                    <span className="mr-2">👤</span>
+                                    {user.gender || 'No gender'}
+                                </p>
+                                {user.guardianName && (
+                                    <p className="flex items-center text-gray-600">
+                                        <span className="mr-2">👥</span>
+                                        Guardian: {user.guardianName}
+                                    </p>
+                                )}
                             </div>
 
-                            {/* View Details Button */}
-                            <button
-                                onClick={() => handleViewDetails(user)}
-                                className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-                            >
-                                View Full Details
-                            </button>
+                            {/* Verification Status */}
+                            <div className="border-t pt-4">
+                                <h3 className="font-semibold mb-2">Verification Status</h3>
+                                <div className="space-y-2">
+                                    <div className="flex items-center">
+                                        <span className={`w-3 h-3 rounded-full mr-2 ${user.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+                                        <span>Mobile {user.mobileVerified ? 'Verified' : 'Pending'}</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <span className={`w-3 h-3 rounded-full mr-2 ${user.emailVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+                                        <span>Email {user.emailVerified ? 'Verified' : 'Pending'}</span>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <span className={`w-3 h-3 rounded-full mr-2 ${user.aadharVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+                                        <span>Aadhar {user.aadharVerified ? 'Verified' : 'Pending'}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}
             </div>
-
+            
+            {/* Add debug section at the bottom */}
+            {renderDebugSection()}
+            
             {/* Details Modal */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 {selectedUser && (

@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const useUserStore = create((set) => ({
   users: [],
+  currentUser: null,
   selectedUser: null,
   loading: false,
   error: null,
@@ -47,6 +48,8 @@ const useUserStore = create((set) => ({
   updateUserInfo: (data) => set(state => ({
     userInfo: { ...state.userInfo, ...data }
   })),
+
+  setCurrentUser: (user) => set({ currentUser: user }),
 }));
 
 export default useUserStore; 

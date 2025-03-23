@@ -67,7 +67,10 @@ function Sidebar() {
           <ul className="flex flex-col space-y-2">
             <li 
               className="flex items-center text-gray-700 p-2 rounded hover:bg-gray-100 transition duration-200 cursor-pointer"
-              onClick={() => navigate('/profile')}
+              onClick={() => {
+                useUserStore.getState().setSelectedUser(useUserStore.getState().currentUser);
+                document.dispatchEvent(new CustomEvent('openProfileModal'));
+              }}
             >
               <i className="fas fa-user mr-2"></i>
               <span>My Profile</span>
