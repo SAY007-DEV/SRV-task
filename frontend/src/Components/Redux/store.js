@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../Redux/useReducer.js';
+import userReducer from './useReducer';
 
 const store = configureStore({
   reducer: {
-    user: userReducer, // Assuming userReducer is managing user state
-  },
+    user: userReducer
+  }
 });
 
 export default store;

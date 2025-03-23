@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import useUserStore from './store/userStore' // Update path as needed
 import BasicForm from './BasicForm'
 import Modal from './Modal'
 
 function InfoSection() {
-  const userInfo = useSelector((state) => state.user.userInfo)
+  const userInfo = useUserStore(state => state.userInfo)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isEducationEditing, setIsEducationEditing] = useState(false)
   const [educationData, setEducationData] = useState({
@@ -85,39 +85,39 @@ function InfoSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="text-gray-600">Full Name</p>
-            <p className="font-medium">{userInfo.fullName}</p>
+            <p className="font-medium">{userInfo?.fullName || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Date of Birth</p>
-            <p className="font-medium">{userInfo.dateOfBirth}</p>
+            <p className="font-medium">{userInfo?.dateOfBirth || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Gender</p>
-            <p className="font-medium">{userInfo.gender}</p>
+            <p className="font-medium">{userInfo?.gender || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Mobile</p>
-            <p className="font-medium">{userInfo.mobile}</p>
+            <p className="font-medium">{userInfo?.mobile || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Email</p>
-            <p className="font-medium">{userInfo.email}</p>
+            <p className="font-medium">{userInfo?.email || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Aadhar</p>
-            <p className="font-medium">{userInfo.aadhar}</p>
+            <p className="font-medium">{userInfo?.aadhar || 'Not provided'}</p>
           </div>
           <div>
             <p className="text-gray-600">Address</p>
-            <p className="font-medium">{userInfo.address}</p>
+            <p className="font-medium">{userInfo?.address || 'Not provided'}</p>
           </div>
-          {userInfo.guardianName && (
+          {userInfo?.guardianName && (
             <div>
               <p className="text-gray-600">Guardian Name</p>
               <p className="font-medium">{userInfo.guardianName}</p>
             </div>
           )}
-          {userInfo.guardianNumber && (
+          {userInfo?.guardianNumber && (
             <div>
               <p className="text-gray-600">Guardian Number</p>
               <p className="font-medium">{userInfo.guardianNumber}</p>
@@ -130,16 +130,16 @@ function InfoSection() {
           <h3 className="text-lg font-semibold mb-2">Verification Status</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center">
-              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-              <span>Mobile {userInfo.mobileVerified ? 'Verified' : 'Pending'}</span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo?.mobileVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Mobile {userInfo?.mobileVerified ? 'Verified' : 'Pending'}</span>
             </div>
             <div className="flex items-center">
-              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.emailVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-              <span>Email {userInfo.emailVerified ? 'Verified' : 'Pending'}</span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo?.emailVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Email {userInfo?.emailVerified ? 'Verified' : 'Pending'}</span>
             </div>
             <div className="flex items-center">
-              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo.aadharVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-              <span>Aadhar {userInfo.aadharVerified ? 'Verified' : 'Pending'}</span>
+              <span className={`w-3 h-3 rounded-full mr-2 ${userInfo?.aadharVerified ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
+              <span>Aadhar {userInfo?.aadharVerified ? 'Verified' : 'Pending'}</span>
             </div>
           </div>
         </div>
@@ -230,7 +230,7 @@ function InfoSection() {
         </div>
       </div>
 
-      <div className="bg-white shadow rounded-lg p-4 mb-8">
+      {/* <div className="bg-white shadow rounded-lg p-4 mb-8">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">Resume</h2>
           <button className="text-blue-500">Update Resume</button>
@@ -243,7 +243,7 @@ function InfoSection() {
           </div>
         </div>
         <button className="bg-blue-500 text-white py-2 px-4 rounded-lg">Add Video Resume</button>
-      </div>
+      </div> */}
 
       <div className="bg-white shadow rounded-lg p-4 mb-8">
         <div className="flex justify-between items-center mb-4">

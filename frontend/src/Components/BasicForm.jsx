@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import axios from 'axios'
+import useUserStore from './Store/userStore' // Update this path according to your project structure
 
 function BasicForm({ closeModal }) {
-  const dispatch = useDispatch()
+  const updateUserInfo = useUserStore(state => state.updateUserInfo)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -53,18 +53,13 @@ function BasicForm({ closeModal }) {
     };
 
     try {
-      // Send data to your backend API
       const response = await axios.post('http://localhost:5000/api/users/data', displayData);
       
       if (response.status === 200) {
-        // If successful, update Redux store with the response data
-        dispatch({
-          type: 'UPDATE_USER_INFO',
-          payload: response.data.data // Assuming the API returns the saved user data
-        });
+        // Update Zustand store instead of Redux
+        updateUserInfo(response.data.data);
         
         console.log('Data saved successfully:', response.data);
-        // Show success message to user
         alert('Information updated successfully!');
         closeModal();
       }
