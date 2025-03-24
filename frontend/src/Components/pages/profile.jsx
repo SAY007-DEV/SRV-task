@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import useUserStore from '../Store/userStore'; // Update path as needed
-import Modal from '../Modal'; // Update path as needed
+import useUserStore from '../Store/userStore'; 
+import Modal from '../Modal'; 
 
 function Profile() {
     const { 
@@ -23,9 +23,9 @@ function Profile() {
         setIsModalOpen(true);
     };
 
-    console.log('Users:', users); // Debugging log
+    console.log('Users:', users);
 
-    // Add this debug section to display raw state data
+   
     const renderDebugSection = () => (
         <div className="mt-8 p-4 bg-gray-100 rounded-lg">
             <h2 className="text-xl font-bold mb-4">Debug Information</h2>
@@ -158,7 +158,7 @@ function Profile() {
                 ))}
             </div>
             
-            {/* Add debug section at the bottom */}
+        
             {renderDebugSection()}
             
             {/* Details Modal */}

@@ -2,18 +2,18 @@ import express from 'express';
 import { connectDB } from './Config/database.js';
 import cors from 'cors';
 // Import your route files
-import userRoutes from './routes/userRoutes.js';  // adjust path as needed
+import userRoutes from './Routes/userRoutes.js';  
 
 const app = express();
 // dotenv.config();
 
 // Middleware
 app.use(cors());
-app.use(express.json());  // for parsing JSON bodies
-app.use(express.urlencoded({ extended: true }));  // for parsing URL-encoded bodies
+app.use(express.json());  
+app.use(express.urlencoded({ extended: true }));  
 
 // Routes
-app.use('/api/users', userRoutes);  // adjust path as needed
+app.use('/api/users', userRoutes); 
 
 // Basic route for testing
 app.get('/', (req, res) => {
@@ -21,9 +21,9 @@ app.get('/', (req, res) => {
 });
 
 
-// storing
 
-let dataStore = []; // In-memory data storage
+
+let dataStore = []; 
 
 // Get all records
 app.get('/api/data', (req, res) => {

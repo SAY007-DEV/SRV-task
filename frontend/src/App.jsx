@@ -8,7 +8,7 @@ import Sidebar from './Components/Sidebar'
 import Profile from './Components/pages/profile'
 // import ProfileModal from './Components/ProfileModal'
 
-// Layout component for main pages
+
 const MainLayout = ({ children }) => (
   <>
     <Header />
@@ -22,7 +22,7 @@ const MainLayout = ({ children }) => (
   </>
 )
 
-// Layout for profile page (if you want some shared components)
+
 const ProfileLayout = ({ children }) => (
   <>
     <Header />
@@ -38,17 +38,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Profile route with its own layout */}
+      
         <Route path="/profile" element={
           <ProfileLayout>
             <Profile />
           </ProfileLayout>
         } />
         
-        {/* Main layout route */}
+     
         <Route path="/" element={
           <MainLayout>
-            {/* Add your main content here */}
+            
           </MainLayout>
         } />
       </Routes>

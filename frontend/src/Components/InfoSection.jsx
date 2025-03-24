@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useUserStore from './Store/userStore.js' // Update path as needed
+import useUserStore from './Store/userStore.js' 
 import BasicForm from './BasicForm'
 import Modal from './Modal'
 import Right from './Right.jsx'
@@ -45,7 +45,7 @@ function InfoSection() {
     website: ""
   })
 
-  console.log('Current userInfo:', userInfo); // For debugging
+  console.log('Current userInfo:', userInfo);
 
   const handleUpdateClick = () => {
     setIsModalOpen(true)
@@ -57,7 +57,7 @@ function InfoSection() {
 
   const handleEducationUpdate = async () => {
     try {
-      // Replace with your actual API endpoint
+     
       const response = await fetch('https://server-task-ex4s.onrender.com/api/data', {
         method: 'POST',
         headers: {
@@ -68,13 +68,13 @@ function InfoSection() {
 
       if (response.ok) {
         setIsEducationEditing(false);
-        // You might want to show a success message here
+       
       } else {
         throw new Error('Failed to update education');
       }
     } catch (error) {
       console.error('Error updating education:', error);
-      // You might want to show an error message here
+      
     }
   }
 
@@ -88,13 +88,11 @@ function InfoSection() {
     }))
   }
 
-  // Career Objective handlers
   const handleCareerSave = () => {
     updateUserInfo({ careerObjective })
     setIsCareerEditing(false)
   }
 
-  // Skills handlers
   const handleAddSkill = (e) => {
     e.preventDefault()
     if (newSkill.trim()) {
@@ -112,7 +110,7 @@ function InfoSection() {
     setIsSkillsEditing(false)
   }
 
-  // Portfolio handlers
+
   const handlePortfolioSave = () => {
     updateUserInfo({ portfolio })
     setIsPortfolioEditing(false)
@@ -120,9 +118,9 @@ function InfoSection() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 p-4 lg:mt-6 max-w-7xl mx-auto w-full">
-      {/* Main content column */}
+     
       <div className="flex-1">
-        {/* Personal Information Card */}
+        
         <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
             <h2 className="text-xl font-semibold mb-2 sm:mb-0">
@@ -178,7 +176,7 @@ function InfoSection() {
             )}
           </div>
           
-          {/* Verification Status */}
+         
           <div className="mt-8">
             <h3 className="text-lg font-semibold mb-6">Verification Status</h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -198,7 +196,7 @@ function InfoSection() {
           </div>
         </div>
 
-        {/* Education Card */}
+       
         <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h2 className="text-xl font-semibold mb-2 sm:mb-0">Education</h2>
@@ -260,7 +258,6 @@ function InfoSection() {
           </div>
         </div>
 
-        {/* Career Objective Card */}
         <div className="bg-white shadow rounded-lg p-6 mb-8 w-full">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
             <h2 className="text-xl font-semibold mb-2 sm:mb-0">Career Objective</h2>

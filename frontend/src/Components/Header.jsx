@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import useUserStore from './Store/userStore' // Update path as needed
+import useUserStore from './Store/userStore' 
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +24,7 @@ function Header() {
               <img src="asap.png" alt="ASAP Logo" className="h-16 md:h-20" />
             </div>
 
-            {/* Centered Navigation */}
+          
             <nav className="hidden md:flex flex-1 justify-center">
               <div className="space-x-8"> {/* Increased space between nav items */}
                 <a href="#" className="text-gray-700 hover:text-blue-500 font-medium text-lg">Jobs</a>
@@ -35,7 +35,7 @@ function Header() {
               </div>
             </nav>
 
-            {/* Profile Section - Right Side */}
+           
             <div className="hidden md:flex items-center">
               <div className="relative">
                 <button 
@@ -60,7 +60,7 @@ function Header() {
                   </svg>
                 </button>
 
-                {/* Profile Dropdown */}
+      
                 {isProfileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
                     {/* <a href="/profile" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">
@@ -78,7 +78,7 @@ function Header() {
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
+          
             <div className="md:hidden flex items-center space-x-4">
               {/* Mobile Profile Icon */}
               <button className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
@@ -97,7 +97,7 @@ function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu */}
+    
       {isMenuOpen && (
         <nav className="md:hidden bg-white shadow absolute w-full z-50">
           <div className="container mx-auto px-4 py-4">

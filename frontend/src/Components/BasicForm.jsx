@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import useUserStore from './Store/userStore' // Update this path according to your project structure
+import useUserStore from './Store/userStore' 
 
 function BasicForm({ closeModal }) {
   const updateUserInfo = useUserStore(state => state.updateUserInfo)
@@ -32,7 +32,7 @@ function BasicForm({ closeModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Format the data for display
+   
     const displayData = {
       fullName: `${formData.firstName} ${formData.lastName}`,
       dateOfBirth: formData.dob,
@@ -44,7 +44,7 @@ function BasicForm({ closeModal }) {
       mobileVerified: true,
       emailVerified: true,
       aadharVerified: false,
-      // Add additional fields that might be needed in InfoSection
+      
       guardianName: formData.guardianName,
       guardianNumber: formData.guardianNumber,
       state: formData.state,
@@ -56,7 +56,7 @@ function BasicForm({ closeModal }) {
       const response = await axios.post('https://server-task-ex4s.onrender.com/api/users/data', displayData);
       
       if (response.status === 200) {
-        // Update Zustand store instead of Redux
+        
         updateUserInfo(response.data.data);
         
         console.log('Data saved successfully:', response.data);

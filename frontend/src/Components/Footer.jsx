@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer className="bg-gray-50 py-8">
       <div className="container mx-auto px-4">
-        {/* Top Navigation - Mobile Dropdown / Desktop Row */}
+     
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <img alt="ASAP Kerala logo" className="h-10 mb-4 md:mb-0" src="asap.png"/>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:flex md:space-x-4 gap-3 text-sm">
@@ -18,9 +18,9 @@ function Footer() {
 
         <hr className="my-6"/>
 
-        {/* Main Footer Sections */}
+      
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 text-sm">
-          {/* Internship Section */}
+        
           <div>
             <h3 className="font-semibold mb-3">Internships</h3>
             <ul className="space-y-2">
@@ -31,7 +31,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Jobs Section */}
+      
           <div>
             <h3 className="font-semibold mb-3">Jobs</h3>
             <ul className="space-y-2">
@@ -42,7 +42,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Courses Section */}
+   
           <div>
             <h3 className="font-semibold mb-3">Courses</h3>
             <ul className="space-y-2">
@@ -53,7 +53,7 @@ function Footer() {
             </ul>
           </div>
 
-          {/* Companies Section */}
+       
           <div>
             <h3 className="font-semibold mb-3">Companies</h3>
             <ul className="space-y-2">
@@ -65,7 +65,7 @@ function Footer() {
           </div>
         </div>
 
-        {/* Contact & Newsletter Section */}
+       
         <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Contact Info */}

@@ -7,7 +7,7 @@ import BasicForm from './BasicForm'
 
 function Sidebar() {
   const navigate = useNavigate()
-  const userInfo = useUserStore(state => state.userInfo) || {} // Add fallback empty object
+  const userInfo = useUserStore(state => state.userInfo) || {} 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const openModal = () => setIsModalOpen(true)
@@ -91,7 +91,7 @@ function Sidebar() {
           </button>
         </div>
         <div className="mt-6 text-gray-500 text-sm">
-          {/* <p>Last updated on 10 Oct 2024</p> */}
+       
         </div>
       </aside>
 

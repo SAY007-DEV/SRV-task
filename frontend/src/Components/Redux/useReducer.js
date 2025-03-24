@@ -1,4 +1,4 @@
-// frontend/src/Components/Redux/userReducer.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
