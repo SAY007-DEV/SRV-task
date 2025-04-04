@@ -93,7 +93,7 @@ function BasicForm({ closeModal }) {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Date of Birth<span className="text-red-500">*</span></label>
-                    <input type="text" name="dob" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder='DD/MM/YYYY' value={formData.dob} onChange={handleChange} required />
+                    <input type="date" name="dob" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder='DD/MM/YYYY' value={formData.dob} onChange={handleChange} required />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Gender<span className="text-red-500">*</span></label>
@@ -124,11 +124,11 @@ function BasicForm({ closeModal }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Mobile<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="mobile" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.mobile} onChange={handleChange} required />
-                        {formData.mobile.length === 13 && (
+                        <input type="number" name="mobile" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.mobile} onChange={handleChange} required />
+                        {formData.mobile.length === 10 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
-                        {(formData.mobile.length < 13 || formData.mobile.length > 13) && (
+                        {(formData.mobile.length < 10 || formData.mobile.length > 10) && (
                             <i className="fas fa-exclamation-triangle text-yellow-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
                     </div>
@@ -143,7 +143,7 @@ function BasicForm({ closeModal }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Aadhar<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="aadhar" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.aadhar} onChange={handleChange} required />
+                        <input type="number" name="aadhar" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.aadhar} onChange={handleChange} required />
                         {formData.aadhar.length === 12 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
@@ -172,7 +172,7 @@ function BasicForm({ closeModal }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Pincode<span className="text-red-500">*</span></label>
                     <div className="relative mt-1">
-                        <input type="text" name="pincode" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.pincode} onChange={handleChange} required />
+                        <input type="number" name="pincode" className="block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.pincode} onChange={handleChange} required />
                         {formData.pincode.length === 6 && (
                             <i className="fas fa-check-circle text-green-500 absolute right-2 top-1/2 transform -translate-y-1/2"></i>
                         )}
@@ -187,7 +187,7 @@ function BasicForm({ closeModal }) {
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Parent / Guardian Number</label>
-                    <input type="text" name="guardianNumber" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.guardianNumber} onChange={handleChange} placeholder="Mobile Number"/>
+                    <input type="number" name="guardianNumber" className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" value={formData.guardianNumber} onChange={handleChange} placeholder="Mobile Number"/>
                 </div>
             </div>
             <div className="flex justify-end space-x-4 mt-6">
